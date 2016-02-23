@@ -6,6 +6,8 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require speechkitt.min
+//= require voice
 //= require spree/backend
 
 //= require_tree .

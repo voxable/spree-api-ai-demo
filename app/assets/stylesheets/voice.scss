@@ -1,0 +1,10 @@
+#skitt-ui {
+  height: 50px;
+  z-index: 1000 !important;
+
+  #skitt-toggle-button {
+    &:hover {
+      text-decoration: none;
+    }
+  }
+}
