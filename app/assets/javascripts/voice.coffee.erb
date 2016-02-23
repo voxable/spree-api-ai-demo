@@ -34,6 +34,9 @@ class SpreeVoice
     @apiAiClient.onInit = =>
       @apiAiClient.open()
 
+    # Add a handler for query results
+    @apiAiClient.onResults = @_handleApiAiResult
+
     # Initialize Api.ai client
     @apiAiClient.init()
 
@@ -52,13 +55,34 @@ class SpreeVoice
 
   # Send a text query to Api.ai
   _queryApiAi: (speech) ->
-    @apiAiClient.onResults = (results) ->
-      console.log 'Api.ai result', results
-
     @apiAiClient.sendJson
       query: speech
       sessionId: 'session'
       lang: 'EN'
+
+  # Handle Api.ai query results and call the appropriate function based on user intent
+  _handleApiAiResult: (queryResult) =>
+    console.log 'Api.ai result', queryResult
+
+    action = queryResult.result.action
+    parameters = queryResult.result.parameters
+
+    switch action
+      when 'filterOrders'
+        @_filterOrders parameters.orderStatus
+
+  # Redirect to a view of the orders filtered by status
+  _filterOrders: (orderStatus) ->
+    console.log 'filterOrders'
+
+    urlParams = 'utf8=✓&q[created_at_gt]=&q[created_at_lt]=&q[number_cont]=&q' +
+        "[state_eq]=#{orderStatus}&q[payment_state_eq]=&q[shipment_state_eq]=" +
+        '&q[bill_address_firstname_start]=&q[bill_address_lastname_start]=' +
+        '&q[email_cont]=&q[line_items_variant_id_in]=&q[promotions_id_in]=' +
+        '&q[completed_at_not_null]=0&q[completed_at_not_null]=' +
+        '1&q[considered_risky_eq]=&per_page=15'
+
+    window.location = '/admin/orders?' + encodeURI(urlParams)
 
 $ ->
   voice = new SpreeVoice()
