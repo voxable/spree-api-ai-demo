@@ -1,0 +1,24 @@
+{
+  "name": "orderStatus",
+  "isOverridable": true,
+  "entries": [
+    {
+      "value": "canceled",
+      "synonyms": [
+        "cancelled",
+        "stopped",
+        "canceled"
+      ]
+    },
+    {
+      "value": "complete",
+      "synonyms": [
+        "completed",
+        "finished",
+        "complete"
+      ]
+    }
+  ],
+  "isEnum": false,
+  "automatedExpansion": false
+}

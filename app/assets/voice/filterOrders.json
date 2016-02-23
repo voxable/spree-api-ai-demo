@@ -1,0 +1,36 @@
+{
+  "name": "filterOrders",
+  "auto": true,
+  "contexts": [],
+  "templates": [
+    "Show me @orderStatus:orderStatus orders",
+    "Show @orderStatus:orderStatus orders",
+    "Filter by @orderStatus:orderStatus orders"
+  ],
+  "responses": [
+    {
+      "resetContexts": false,
+      "action": "filterOrders",
+      "affectedContexts": [],
+      "parameters": [
+        {
+          "required": false,
+          "dataType": "@orderStatus",
+          "name": "orderStatus",
+          "value": "$orderStatus"
+        }
+      ],
+      "speech": []
+    }
+  ],
+  "state": "LEARNED",
+  "priority": 500000,
+  "cortanaCommand": {
+    "navigateOrService": "NAVIGATE",
+    "target": ""
+  },
+  "assistantCommand": {
+    "urlCommand": "",
+    "doCommand": ""
+  }
+}
