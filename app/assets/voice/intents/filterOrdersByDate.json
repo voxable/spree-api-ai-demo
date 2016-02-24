@@ -1,0 +1,37 @@
+{
+  "name": "filterOrdersByDate",
+  "auto": true,
+  "contexts": [],
+  "templates": [
+    "Show me orders created before @sys.date:beforeDate",
+    "Display orders created before @sys.date:beforeDate",
+    "Show orders created before @sys.date:beforeDate",
+    "Filter by orders created before @sys.date:beforeDate"
+  ],
+  "responses": [
+    {
+      "resetContexts": false,
+      "action": "filterOrdersByDate",
+      "affectedContexts": [],
+      "parameters": [
+        {
+          "required": true,
+          "dataType": "@sys.date",
+          "name": "beforeDate",
+          "value": "$beforeDate"
+        }
+      ],
+      "speech": []
+    }
+  ],
+  "state": "LEARNED",
+  "priority": 500000,
+  "cortanaCommand": {
+    "navigateOrService": "NAVIGATE",
+    "target": ""
+  },
+  "assistantCommand": {
+    "urlCommand": "",
+    "doCommand": ""
+  }
+}

@@ -1,5 +1,5 @@
 {
-  "name": "filterOrders",
+  "name": "filterOrdersByStatus",
   "auto": true,
   "contexts": [],
   "templates": [
@@ -10,7 +10,7 @@
   "responses": [
     {
       "resetContexts": false,
-      "action": "filterOrders",
+      "action": "filterOrdersByStatus",
       "affectedContexts": [],
       "parameters": [
         {
