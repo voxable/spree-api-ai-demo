@@ -68,21 +68,28 @@ class SpreeVoice
     parameters = queryResult.result.parameters
 
     switch action
-      when 'filterOrders'
-        @_filterOrders parameters.orderStatus
+      when 'filterOrdersByStatus'
+        @_filterOrders orderStatus: parameters.orderStatus
+      when 'filterOrdersByDate'
+        @_filterOrders beforeDate: parameters.beforeDate
 
   # Redirect to a view of the orders filtered by status
-  _filterOrders: (orderStatus) ->
-    console.log 'filterOrders'
+  _filterOrders: (options) ->
+    {orderStatus, beforeDate} = options
 
-    urlParams = 'utf8=✓&q[created_at_gt]=&q[created_at_lt]=&q[number_cont]=&q' +
-        "[state_eq]=#{orderStatus}&q[payment_state_eq]=&q[shipment_state_eq]=" +
-        '&q[bill_address_firstname_start]=&q[bill_address_lastname_start]=' +
-        '&q[email_cont]=&q[line_items_variant_id_in]=&q[promotions_id_in]=' +
-        '&q[completed_at_not_null]=0&q[completed_at_not_null]=' +
-        '1&q[considered_risky_eq]=&per_page=15'
+    # Properly format the parameters
+    beforeDate = if beforeDate? then beforeDate.replace(/\-/g, '/') else ''
+    orderStatus = if orderStatus? then orderStatus else ''
 
-    window.location = '/admin/orders?' + encodeURI(urlParams)
+    urlParams = encodeURI('utf8=✓&q[created_at_gt]=&q[created_at_lt]=') +
+        encodeURIComponent(beforeDate) + encodeURI('&q[number_cont]=&q') +
+        encodeURI("[state_eq]=#{orderStatus}&q[payment_state_eq]=&q[shipment_state_eq]=") +
+        encodeURI('&q[bill_address_firstname_start]=&q[bill_address_lastname_start]=') +
+        encodeURI('&q[email_cont]=&q[line_items_variant_id_in]=&q[promotions_id_in]=') +
+        encodeURI('&q[completed_at_not_null]=0&q[completed_at_not_null]=') +
+        encodeURI('1&q[considered_risky_eq]=&per_page=15')
+
+    window.location = '/admin/orders?' + urlParams
 
 $ ->
   voice = new SpreeVoice()
