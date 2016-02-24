@@ -81,13 +81,10 @@ class SpreeVoice
     beforeDate = if beforeDate? then beforeDate.replace(/\-/g, '/') else ''
     orderStatus = if orderStatus? then orderStatus else ''
 
-    urlParams = encodeURI('utf8=✓&q[created_at_gt]=&q[created_at_lt]=') +
-        encodeURIComponent(beforeDate) + encodeURI('&q[number_cont]=&q') +
-        encodeURI("[state_eq]=#{orderStatus}&q[payment_state_eq]=&q[shipment_state_eq]=") +
-        encodeURI('&q[bill_address_firstname_start]=&q[bill_address_lastname_start]=') +
-        encodeURI('&q[email_cont]=&q[line_items_variant_id_in]=&q[promotions_id_in]=') +
-        encodeURI('&q[completed_at_not_null]=0&q[completed_at_not_null]=') +
-        encodeURI('1&q[considered_risky_eq]=&per_page=15')
+    urlParams = encodeURI('utf8=✓&q[created_at_lt]=') +
+        encodeURIComponent(beforeDate) +
+        encodeURI("&q[state_eq]=#{orderStatus}") +
+        encodeURI('&q[completed_at_not_null]=0&q[completed_at_not_null]=1&per_page=15')
 
     window.location = '/admin/orders?' + urlParams
 
