@@ -25,7 +25,7 @@ class SpreeVoice
 
   # Configure the Api.ai client
   _configureApiAi: ->
-    @apiAiClient.server = 'wss://api.api.ai:4435/api/ws/query'
+    @apiAiClient.server = 'wss://api-ws.api.ai:4435/api/ws/query'
     @apiAiClient.token = '<%= ENV['API_AI_CLIENT_ACCESS_TOKEN'] %>';
 
     # Once socket is opened, configure SpeechKITT
