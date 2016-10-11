@@ -17,3 +17,9 @@
 /tmp
 
 .env
+
+# RubyMine
+.idea
+
+# OSX
+.DS_Store
