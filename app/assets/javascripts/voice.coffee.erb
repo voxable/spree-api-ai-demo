@@ -1,13 +1,13 @@
 class SpreeVoice
   constructor: ->
     @recognition = new webkitSpeechRecognition()
-    @apiAiClient = new ApiAi()
+    @apiAiClient = new ApiAi.ApiAiClient accessToken: '<%= ENV['API_AI_CLIENT_ACCESS_TOKEN'] %>'
     @speechKITT = window.SpeechKITT
 
   # Initialize and configure Web Speech, SpeechKITT, and Api.ai
   init: ->
-    @_configureApiAi()
     @_configureWebSpeech()
+    @_configureSpeechKITT()
     @_displaySpeechKITT()
 
   # Configure SpeechKITT
@@ -23,23 +23,6 @@ class SpreeVoice
     @recognition.addEventListener 'end', @speechKITT.onEnd
     @recognition.addEventListener 'result', @_handleRecognitionResult
 
-  # Configure the Api.ai client
-  _configureApiAi: ->
-    @apiAiClient.server = 'wss://api-ws.api.ai:4435/api/ws/query'
-    @apiAiClient.token = '<%= ENV['API_AI_CLIENT_ACCESS_TOKEN'] %>';
-
-    # Once socket is opened, configure SpeechKITT
-    @apiAiClient.onOpen = =>
-      @_configureSpeechKITT()
-    @apiAiClient.onInit = =>
-      @apiAiClient.open()
-
-    # Add a handler for query results
-    @apiAiClient.onResults = @_handleApiAiResult
-
-    # Initialize Api.ai client
-    @apiAiClient.init()
-
   # Display the SpeechKITT UI
   _displaySpeechKITT: ->
     SpeechKITT.render()
@@ -48,6 +31,7 @@ class SpreeVoice
 
   # Handle the recognized speech
   _handleRecognitionResult: (event) =>
+    console.log event
     transcript = event.results[0][0].transcript
     console.log 'recognized speech:', transcript
 
@@ -55,10 +39,8 @@ class SpreeVoice
 
   # Send a text query to Api.ai
   _queryApiAi: (speech) ->
-    @apiAiClient.sendJson
-      query: speech
-      sessionId: 'session'
-      lang: 'EN'
+    # Add a handler for query results
+    @apiAiClient.textRequest(speech).then @_handleApiAiResult
 
   # Handle Api.ai query results and call the appropriate function based on user intent
   _handleApiAiResult: (queryResult) =>
