@@ -7,7 +7,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require speechkitt.min
-//= require api.ai.min
+//= require ApiAi.min
 //= require voice
 //= require spree/backend
 //= require_tree .
